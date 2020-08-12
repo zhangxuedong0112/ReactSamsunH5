@@ -4,6 +4,9 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styles from './index.less';
 import './nprogress.less';
 import { NavBar, Icon } from 'antd-mobile';
+import { observer } from 'mobx-react';
+import AppStore from "@/store/app"
+import { formatMessage } from 'umi-plugin-locale';
 
 NProgress.configure({ showSpinner: false });
 
@@ -13,8 +16,8 @@ export interface IBasicLayout {
   loading: any;
   [key: string]: any;
 }
-const BasicLayout: React.FC<IBasicLayout> = props => {
-    const { children, loading, location: { pathname = '/' }, route: { routes }, } = props;
+const BasicLayout: React.FC<IBasicLayout> = observer(props => {
+    const { children, location, location: { pathname = '/' }, route: { routes }, } = props;
     // TODO : 这里需要做路由鉴权
 
     // const { href } = window.location; // 浏览器地址栏中地址
@@ -28,7 +31,16 @@ const BasicLayout: React.FC<IBasicLayout> = props => {
     //   }
     // }
 
-    console.log("@@@@@@", props)
+    console.log("@@@@@@", props, formatMessage({ id: `title.${location.pathname}` }))
+
+    /* 设置title ， 根据路由路径 去 src/locales 里边去设置对应的title */
+    let title = formatMessage({ id: `title.${location.pathname}` })
+    if(title.indexOf("title.") != -1){
+        title = location.pathname
+    }
+    AppStore.title = title;
+    
+
 
     return (
         <TransitionGroup>
@@ -42,7 +54,7 @@ const BasicLayout: React.FC<IBasicLayout> = props => {
                         <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
                         <Icon key="1" type="ellipsis" />,
                     ]}
-                    >NavBar</NavBar>
+                >{AppStore.title}</NavBar>
 
                     <div className={styles.normal}>
                         {children}
@@ -51,6 +63,6 @@ const BasicLayout: React.FC<IBasicLayout> = props => {
             </CSSTransition>
         </TransitionGroup>
   );
-};
+});
 
 export default BasicLayout;

@@ -2,7 +2,7 @@
 
 - umi 脚手架
     - [文档](https://umijs.org/zh-CN/docs/navigate-between-pages)
-- antd 4
+- antd mobile
 - React 框架
 - React Hook 推荐使用
     - [文档](https://react.docschina.org/docs/hooks-intro.html)
