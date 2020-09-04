@@ -27,24 +27,23 @@ const BasicLayout: React.FC<IBasicLayout> = (props:any) => {
 
     return (
         <div>
-        <TransitionGroup
-            childFactory={child => React.cloneElement( child, {classNames: ANIMATION_MAP[history.action]})}
-        >
-            <CSSTransition key={pathname} classNames="fade" timeout={300}>
-                <div key={pathname} style={{ position: 'absolute', width: '100%', height: '100%' }}>
-                    {/* top menu */}
-                    <NavBarSam {...props}></NavBarSam>
+            <TabBarSam {...props}></TabBarSam>
+            {/* <TransitionGroup
+                childFactory={child => React.cloneElement( child, {classNames: ANIMATION_MAP[history.action]})}
+            >
+                <CSSTransition key={pathname} classNames="fade" timeout={300}>
+                    <div key={pathname} style={{ position: 'absolute', width: '100%', height: '100%' }}>
+                        <NavBarSam {...props}></NavBarSam>
 
-                    {/* render content */}
-                    <div className={styles.normal}>
-                        {children}
+                        <div className={styles.normal}>
+                            {children}
+                        </div>
+
+                        
+
                     </div>
-
-                    
-
-                </div>
-            </CSSTransition>
-        </TransitionGroup>
+                </CSSTransition>
+            </TransitionGroup> */}
         </div>
   );
 };
